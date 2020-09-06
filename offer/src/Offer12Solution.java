@@ -26,4 +26,48 @@
  * 1 <= board[i].length <= 200
  */
 public class Offer12Solution {
+
+    public static void main(String[] args) {
+        //基础验证
+//        char[][] board = {{'A', 'B', 'C', 'E'}, {'S', 'F', 'C', 'S'}, {'A', 'D', 'E', 'E'}};
+//        String word = "ABCCED";
+        char[][] board = {{'A', 'B'}};
+        String word = "BA";
+        System.out.println(new Offer12Solution().exist(board,word));
+    }
+
+    /**
+     * 方法1：暴力解法,递归验证。
+     * 唯一可递归的参数是当前字母的位置，而不是board的划片
+     * 时间复杂度：O(3^K*M*N)
+     *
+     * @param board
+     * @param word
+     * @return
+     */
+    public boolean exist(char[][] board, String word) {
+        if (board == null || board.length == 0 || null == word || word.length() == 0) return false;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                if (dfs(board, word.toCharArray(), i, j, 0)) return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean dfs(char[][] board, char[] word, int i, int j, int k) {
+        //越界返回false，结束查找；
+        if (i < 0 || i > board.length - 1 || j < 0 || j > board[i].length - 1) return false;
+        //字母不相等返回false，结束查找；
+        if (board[i][j] != word[k]) return false;
+        //所有字母已经匹配返回true，结束查找；
+        if (k == word.length - 1) return true;
+        //将当前位置改为不可匹配
+        char tmp = board[i][j];
+        board[i][j] = '/';
+        boolean result = dfs(board, word, i - 1, j, k + 1) || dfs(board, word, i + 1, j, k + 1) ||
+                dfs(board, word, i, j - 1, k + 1) || dfs(board, word, i, j + 1, k + 1);
+        board[i][j] = tmp;
+        return result;
+    }
 }
