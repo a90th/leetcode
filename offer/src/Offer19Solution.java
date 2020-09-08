@@ -45,7 +45,7 @@ public class Offer19Solution {
 
     public static void main(String[] args) {
         //基准验证
-        boolean result = new Offer19Solution().isMatch1("mississippi", "mis*is*p*.");
+        boolean result = new Offer19Solution().isMatch2("aaa", ".*");
         System.out.println(result);
     }
 
@@ -77,6 +77,8 @@ public class Offer19Solution {
                 if ('.' == p.charAt(j - 1) || p.charAt(j - 1) == s.charAt(i - 1))
                     dp[i][j] = dp[i - 1][j - 1];
                 if ('*' == p.charAt(j - 1) && '.' == p.charAt(j - 2)) {
+                    //动态规划算法中不应该出现回头操作的现象，保存并复用已有结果，从小到大计算
+                    //ERROR
                     for (int k = 1; k <= i; k++) {
                         dp[k][j] = dp[k][j - 2] || dp[k][j];
                     }
@@ -90,5 +92,45 @@ public class Offer19Solution {
             }
         }
         return dp[s.length()][p.length()];
+    }
+
+
+    /**
+     * 方法2：动态规划方法
+     *
+     * @param s
+     * @param p
+     * @return
+     */
+    public boolean isMatch2(String s, String p) {
+        int M = s.length();
+        int N = p.length();
+        boolean[][] dp = new boolean[M + 1][N + 1];//默认所有值初始化为false
+        for (int i = 0; i <= M; i++) {
+            for (int j = 0; j <= N; j++) {
+                if (j == 0) {//空字符串情况
+                    dp[i][j] = (i == 0);
+                } else {
+                    if (i > 0 && (s.charAt(i - 1) == p.charAt(j - 1) || '.' == p.charAt(j - 1))) {
+                        dp[i][j] = dp[i - 1][j - 1];
+                    } else if (p.charAt(j - 1) == '*') {//重点：只关注到当前这一步的结果，不向后预先处理
+                        //有*号时不使用，跟前面的字母或者点号视为空串
+                        if (j >= 2)
+                            dp[i][j] = dp[i][j - 2] || dp[i][j];
+//                        //有*号时，跟前面的字母或者点号视为1～2*字母，为什么是1～2？ERROR
+//                        if (i >= 1 && j >= 2) {
+//                            dp[i][j] = (dp[i - 1][j-2] && (s.charAt(i - 1) == p.charAt(j - 2) || p.charAt(j - 2) == '.')) || dp[i][j];
+//                            dp[i][j] = (dp[i - 1][j-1] && (s.charAt(i - 1) == p.charAt(j - 2) || p.charAt(j - 2) == '.')) || dp[i][j];
+//                        }
+                        //有*号时，看作多出一个字母，可以在s中有相同字母，即可匹配
+                        //重点步骤
+                        if (i >= 1 && j >= 2) {
+                            dp[i][j] = (dp[i - 1][j] && (s.charAt(i - 1) == p.charAt(j - 2) || p.charAt(j - 2) == '.')) || dp[i][j];
+                        }
+                    }
+                }
+            }
+        }
+        return dp[M][N];
     }
 }
