@@ -12,7 +12,7 @@
 public class Offer25Solution {
 
     /**
-     * 方法1：
+     * 方法1：选择小的节点放到新的队列
      *
      * @param l1
      * @param l2
@@ -21,25 +21,31 @@ public class Offer25Solution {
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
         if (null == l1) return l2;
         if (null == l2) return l1;
-        ListNode pre = new ListNode(-1);
-        pre.next = l1.val <= l2.val ? l1 : l2;
-        ListNode head = pre.next;
-
+        ListNode head = null;
+        //相似代码，应该合并
+        if (l1.val <= l2.val) {
+            head = l1;
+            l1 = l1.next;
+        } else {
+            head = l2;
+            l2 = l2.next;
+        }
+        ListNode point = head;
         while (null != l1 && null != l2) {
-            if (l1.val > l2.val) {
-                ListNode tmp = l2.next;
-                pre.next = l2;
-
-                l2 = l1;
-                l1 = tmp;
+            if (l1.val <= l2.val) {
+                point.next = l1;
+                l1 = l1.next;
+            } else {
+                point.next = l2;
+                l2 = l2.next;
             }
-            if (null == l1) {
-                pre.next = l2;
-            }
-            if (null == l2) {
-                pre.next = l1;
-            }
-
+            point = point.next;
+        }
+        if (null == l1 && null != l2) {
+            point.next = l2;
+        }
+        if (null != l1 && null == l2) {
+            point.next = l1;
         }
         return head;
     }
@@ -51,5 +57,29 @@ public class Offer25Solution {
         ListNode(int x) {
             val = x;
         }
+    }
+
+    public ListNode mergeTwoLists2(ListNode l1, ListNode l2) {
+        if (null == l1) return l2;
+        if (null == l2) return l1;
+        ListNode drum = new ListNode(0);
+        ListNode point = drum;
+        while (null != l1 && null != l2) {
+            if (l1.val <= l2.val) {
+                point.next = l1;
+                l1 = l1.next;
+            } else {
+                point.next = l2;
+                l2 = l2.next;
+            }
+            point = point.next;
+        }
+        if (null == l1 && null != l2) {
+            point.next = l2;
+        }
+        if (null != l1 && null == l2) {
+            point.next = l1;
+        }
+        return drum.next;
     }
 }
