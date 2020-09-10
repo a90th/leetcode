@@ -182,14 +182,6 @@ public class Offer07Solution {
             System.out.print(currentNode.val + "\t");
         }
     }
-
-    class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        TreeNode(int x) {
-            val = x;
-        }
-    }
 }
+
+

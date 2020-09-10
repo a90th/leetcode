@@ -1,5 +1,3 @@
-import apple.laf.JRSUIUtils;
-
 import java.util.ArrayDeque;
 import java.util.Queue;
 
@@ -67,15 +65,5 @@ public class Offer26Solution {
         if (null == A) return null == B;
         if (null == B) return null == A;
         return A.val == B.val && isSame(A.left, B.left) && isSame(A.right, B.right);
-    }
-}
-
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-
-    TreeNode(int x) {
-        val = x;
     }
 }
