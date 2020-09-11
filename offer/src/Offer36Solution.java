@@ -16,6 +16,18 @@ import java.util.List;
  */
 public class Offer36Solution {
 
+    public static void main(String[] args) {
+        //基准测试
+        Node root = new Node(4);
+        root.left = new Node(2);
+        root.right = new Node(5);
+        root.left.left = new Node(1);
+        root.left.right = new Node(3);
+
+        Node result = new Offer36Solution().treeToDoublyList(root);
+        System.out.print(result);
+    }
+
     /**
      * 中序遍历即可拿到正确排序的列表
      *
@@ -39,12 +51,12 @@ public class Offer36Solution {
 
         if (null != node.left) result.addAll(inorder(node.left));
         result.add(node);
-        if (null != node.right) result.addAll(inorder(node.left));
+        if (null != node.right) result.addAll(inorder(node.right));
 
         return result;
     }
 
-    class Node {
+    static class Node {
         public int val;
         public Node left;
         public Node right;
