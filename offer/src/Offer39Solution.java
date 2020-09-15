@@ -34,10 +34,36 @@ public class Offer39Solution {
     }
 
     /**
-     * 方法
+     * 方法2：进行排序，数量超过一半的数字必然出现在length/2+1未知上
+     * 可以使用复杂度为n*log(n)的算法
+     *
      * @param nums
      * @return
      */
     public int majorityElement2(int[] nums) {
+        int start = 0;
+        int end = nums.length - 1;
+        return start;
+    }
+
+    /**
+     * 方法3：摩尔投票法
+     * 1, 2, 3, 2, 2, 2, 5, 4, 2
+     * 1,-1,
+     *       1,-1,
+     *             1, 1,-1,-1,
+     *                         1
+     * 时间复杂度为O(N)，空间复杂度O(1)
+     * @param nums
+     * @return
+     */
+    public int majorityElement3(int[] nums) {
+        int result = 0;
+        int votes = 0;
+        for (int num : nums) {
+            if (0 == votes) result = num;
+            votes += result == num ? 1 : -1;
+        }
+        return result;
     }
 }
