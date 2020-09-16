@@ -89,10 +89,14 @@ public class Offer40Solution {
 
     /**
      * 快排的思想
+     * 重点：快速排序的模板
+     *
      * @param arr
      * @param k
      * @return
      */
     public int[] getLeastNumbers3(int[] arr, int k) {
+
     }
+
 }
