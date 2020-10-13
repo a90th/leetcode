@@ -20,16 +20,20 @@ import java.util.PriorityQueue;
 public class Offer40Solution {
 
     public static void main(String[] args) {
-        int[] arr = new int[]{0, 0, 0, 2, 0, 5};
-        int k = 0;
-        int[] result = new Offer40Solution().getLeastNumbers2(arr, k);
-        printArray(result);
+//        int[] arr = new int[]{0, 0, 0, 2, 0, 5};
+//        int k = 0;
+//        int[] result = new Offer40Solution().getLeastNumbers2(arr, k);
+//        printArray(result);
+        int[] arr = new int[]{4, 3, 8, 7, 9, 5, 6};
+        int index = new Offer40Solution().partition(arr, 0, arr.length - 1);
+        System.out.println(index);
     }
 
     public static void printArray(int[] arr) {
         for (int i = 0; i < arr.length; i++) {
             System.out.print(arr[i] + "\t");
         }
+        System.out.println();
     }
 
     /**
@@ -95,8 +99,30 @@ public class Offer40Solution {
      * @param k
      * @return
      */
-    public int[] getLeastNumbers3(int[] arr, int k) {
+//    public int[] getLeastNumbers3(int[] arr, int k) {
+//
+//    }
+    public void swap(int[] arr, int i, int j) {
+        int tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+    }
 
+    //快速切分，返回下标j，表示arr[j]左边的数字比arr[j]小，arr[j]右边比arr[j]大
+    public int partition(int[] arr, int left, int right) {
+        int pivot = arr[right];
+        int i = left - 1;
+        int j = right;
+        while (true) {
+            while (++i <= right && arr[i] < pivot) ;
+            while (--j >= left && arr[j] > pivot) ;
+            if (i >= j) break;
+            swap(arr, i, j);
+            printArray(arr);
+        }
+        arr[right] = arr[j];
+        arr[j] = pivot;
+        return j;
     }
 
 }
