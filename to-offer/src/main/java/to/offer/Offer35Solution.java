@@ -1,5 +1,7 @@
 package to.offer;
 
+import base.struct.graph.RandomNode;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,8 +28,8 @@ import java.util.Map;
  *  
  *
  * 提示：
- * -10000 <= Node.val <= 10000
- * Node.random 为空（null）或指向链表中的节点。
+ * -10000 <= RandomNode.val <= 10000
+ * RandomNode.random 为空（null）或指向链表中的节点。
  * 节点数目不超过 1000 。
  */
 public class Offer35Solution {
@@ -39,21 +41,21 @@ public class Offer35Solution {
      * @param head
      * @return
      */
-    public Node copyRandomList(Node head) {
+    public RandomNode copyRandomList(RandomNode head) {
         if (null == head) return null;
-        Map<Node, Node> oldToNew = new HashMap<>();
-        Node copy = new Node(head.val);
+        Map<RandomNode, RandomNode> oldToNew = new HashMap<>();
+        RandomNode copy = new RandomNode(head.val);
         oldToNew.put(head, copy);
-        Node preHead = new Node(-1);
+        RandomNode preHead = new RandomNode(-1);
         preHead.next = copy;
         while (null != head) {
             if (null != head.next && null == oldToNew.get(head.next)) {
-                Node node = new Node(head.next.val);
-                oldToNew.put(head.next, node);
+                RandomNode RandomNode = new RandomNode(head.next.val);
+                oldToNew.put(head.next, RandomNode);
             }
             if (null != head.random && null == oldToNew.get(head.random)) {
-                Node node = new Node(head.random.val);
-                oldToNew.put(head.random, node);
+                RandomNode RandomNode = new RandomNode(head.random.val);
+                oldToNew.put(head.random, RandomNode);
             }
             copy.next = oldToNew.get(head.next);
             copy.random = oldToNew.get(head.random);

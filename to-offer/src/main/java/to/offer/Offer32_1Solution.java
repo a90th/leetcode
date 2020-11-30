@@ -1,5 +1,7 @@
 package to.offer;
 
+import base.struct.tree.TreeNode;
+
 import java.lang.reflect.Array;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
