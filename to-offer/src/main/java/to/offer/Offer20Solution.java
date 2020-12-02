@@ -1,6 +1,5 @@
 package to.offer;
 
-import javax.swing.plaf.synth.SynthTabbedPaneUI;
 import java.util.HashMap;
 import java.util.Map;
 
