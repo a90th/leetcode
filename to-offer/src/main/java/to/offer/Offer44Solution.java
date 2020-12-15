@@ -18,7 +18,7 @@ public class Offer44Solution {
         int digits = 2;
         int base = 10;
         n = n - 10;
-        while (n >= digits * base * 9) {
+        while (n / base >= digits * 9) {//注意乘运算会导致数值超出int范围
             n = n - digits * base * 9;
             digits++;
             base = base * 10;
